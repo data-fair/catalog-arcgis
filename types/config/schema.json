@@ -1,0 +1,25 @@
+{
+  "$id": "https://github.com/data-fair/catalog-udata/config",
+  "x-exports": [
+    "types",
+    "validate",
+    "schema"
+  ],
+  "title": "ArcGISConfig",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "url"
+  ],
+  "properties": {
+    "url": {
+      "type": "string",
+      "title": "URL",
+      "description": "The URL of the API REST from an ArcGIS service",
+      "x-i18n-description": {
+        "fr": "L'URL de l'API REST du service ArcGIS"
+      },
+      "pattern": "^https?://.+/rest/services/"
+    }
+  }
+}
