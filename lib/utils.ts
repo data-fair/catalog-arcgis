@@ -11,7 +11,7 @@ export const memoizedFetch = memoize(async (url: string) => {
 
 export const listServices = async (baseUrl: string): Promise<ArcGISService[]> => {
   const rootData: ArcGISResponse = await memoizedFetch(baseUrl)
-  const services = rootData.services ?? []
+  const services = [...rootData.services ?? []]
 
   for (const folder of rootData.folders || []) {
     const folderServices = await listServicesInFolder(baseUrl, folder)
