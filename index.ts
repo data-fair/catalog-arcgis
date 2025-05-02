@@ -1,4 +1,4 @@
-import type { CatalogPlugin, CatalogMetadata, CatalogDataset } from '@data-fair/lib-common-types/catalog.js'
+import type { CatalogPlugin, CatalogMetadata, CatalogDataset } from '@data-fair/lib-common-types/catalog/index.js'
 import type { MapServerResponse } from '#types'
 
 import { schema as configSchema, assertValid as assertConfigValid, type ArcGISConfig } from './types/config/index.ts'
