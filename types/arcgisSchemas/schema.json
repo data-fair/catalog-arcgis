@@ -1,0 +1,116 @@
+{
+  "$id": "https://github.com/data-fair/catalog-ods/arcgis-dataset",
+  "x-exports": [
+    "types"
+  ],
+  "type": "object",
+  "title": "ArcGIS Schemas",
+  "definitions": {
+    "ArcGISLayer": {
+      "type": "object",
+      "required": [
+        "type",
+        "name",
+        "id"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Les autres types ne sont pas pris en charge",
+          "enum": [
+            "Group Layer",
+            "Feature Layer"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "parentLayerId": {
+          "type": "number"
+        },
+        "subLayers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ArcGISSubLayer"
+          }
+        }
+      }
+    },
+    "ArcGISFolder": {
+      "type": "object",
+      "properties": {
+        "folders": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ArcGISService"
+          }
+        }
+      }
+    },
+    "ArcGISService": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "description": "Les autres types ne sont pas pris en charge",
+          "enum": [
+            "FeatureServer",
+            "MapServer"
+          ]
+        },
+        "layers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ArcGISLayer"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ]
+    },
+    "ArcGISSubLayer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/definitions/ArcGISLayer"
+    },
+    {
+      "$ref": "#/definitions/ArcGISFolder"
+    },
+    {
+      "$ref": "#/definitions/ArcGISService"
+    }
+  ]
+}

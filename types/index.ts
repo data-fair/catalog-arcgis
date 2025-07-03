@@ -1,2 +1,2 @@
 export type { ArcGISConfig } from './config/index.ts'
-export type * from './arcgis.ts'
+export * from './arcgisSchemas/index.ts'
