@@ -68,8 +68,12 @@ const downloadResource = async ({ resourceId, tmpDir }: GetResourceContext<ArcGI
     fileName = fileName.replace(/[\s/]/g, '_') + '.geojson'
     const filePath = path.join(tmpDir, fileName)
     const url = resourceId + '/query?where=1%3D1&f=geojson'
-    const response = (await axios.get(url)).data // data format geoJSON
-    fs.writeFileSync(filePath, JSON.stringify(response))
+    const response = (await axios.get(url))
+    if (response.status !== 200) {
+      throw new Error(`Erreur lors du téléchargement ${JSON.stringify(response)}`)
+    }
+
+    fs.writeFileSync(filePath, JSON.stringify(response.data))  // data format geoJSON
 
     return filePath
   } catch (error) {

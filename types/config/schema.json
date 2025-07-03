@@ -1,5 +1,5 @@
 {
-  "$id": "https://github.com/data-fair/catalog-udata/config",
+  "$id": "https://github.com/data-fair/catalog-arcgis/config",
   "x-exports": [
     "types",
     "validate",
@@ -19,9 +19,9 @@
       "x-i18n-description": {
         "fr": "L'URL de l'API REST du service ArcGIS"
       },
-      "pattern": "^https?://.+/rest/services",
+      "pattern": "^https?://.+/rest/services/$",
       "examples": [
-        "https://example.com/.../rest/services"
+        "https://example.com/.../rest/services/"
       ]
     }
   }
