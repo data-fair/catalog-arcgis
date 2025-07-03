@@ -19,7 +19,8 @@
           "description": "Les autres types ne sont pas pris en charge",
           "enum": [
             "Group Layer",
-            "Feature Layer"
+            "Feature Layer",
+            "Annotation Layer"
           ]
         },
         "name": {

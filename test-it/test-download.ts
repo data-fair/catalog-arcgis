@@ -57,7 +57,7 @@ describe('getResource', () => {
         .reply(200, metadataResponse)
 
       nock('https://example.com')
-        .get('/arcgis2/rest/services/AppliGrandPublic/EQUIPEMENTS_PUBLICS/MapServer/1/query?where=1%3D1&f=geojson')
+        .get('/arcgis2/rest/services/AppliGrandPublic/EQUIPEMENTS_PUBLICS/MapServer/1/query?where=1%3D1&f=geojson&resultOffset=0&resultRecordCount=1000')
         .reply(200, dataResponse)
 
       const resource = await getResource(context)
@@ -94,7 +94,7 @@ describe('getResource', () => {
         fail('Expected an error to be thrown')
       } catch (error) {
         if (error instanceof Error) {
-          assert.strictEqual(error.message, 'Les ressources ArcGIS pouvant être importées doivent être de type \'Feature Layer\' (type reçu : Map Service)')
+          assert.strictEqual(error.message, 'Les ressources ArcGIS pouvant être importées doivent être de type \'Feature Layer\' ou \'AnnotationLayer\' (type reçu : Map Service)')
         } else {
           fail('An unexpected error occurred')
         }

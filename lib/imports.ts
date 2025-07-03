@@ -16,6 +16,21 @@ const memoizedFetch = memoize(async (url: string) => {
   maxAge: 1000 * 60 * 5 // 5 minutes
 })
 
+/**
+ * Lists folders, services, and layers from an ArcGIS catalog endpoint.
+ *
+ * This function fetches the ArcGIS catalog data from the specified URL or current folder,
+ * then parses and returns a list of datasets (folders and resources) and the navigation path.
+ * It supports folders, FeatureServer/MapServer services, group layers, feature layers, and sublayers.
+ *
+ * @param context - The context object containing the catalog configuration and parameters.
+ * @param context.catalogConfig - The ArcGIS catalog configuration, including the base URL.
+ * @param context.params - Parameters for listing, such as the current folder ID.
+ * @returns An object containing:
+ *   - `results`: Array of folders and resources found at the current level.
+ *   - `count`: The number of items in `results`.
+ *   - `path`: The navigation path as an array of folders.
+ */
 export const list = async ({ catalogConfig, params }: ListContext<ArcGISConfig, ArcGISCapabilities>): ReturnType<CatalogPlugin['list']> => {
   debug(`list folders/services/layers from ${catalogConfig.url} - ${params.currentFolderId}`)
 
@@ -58,7 +73,7 @@ export const list = async ({ catalogConfig, params }: ListContext<ArcGISConfig, 
           title: `${layer.name} - ${layer.id}`,
           type: 'folder'
         } as Folder)
-      } else if (layer.type === 'Feature Layer' && layer.parentLayerId === -1) {
+      } else if ((layer.type === 'Feature Layer' || layer.type === 'Annotation Layer') && layer.parentLayerId === -1) {
         datasets.push({
           id: url + '/' + layer.id,
           title: `${layer.name} - ${layer.id}`,
