@@ -20,6 +20,10 @@
         "fr": "L'URL de l'API REST du service ArcGIS"
       },
       "pattern": "^https?://.+/rest/services/$",
+      "errorMessage": "The URL must start with http:// or https:// and must end with `/rest/services/`.",
+      "x-i18n-errorMessage": {
+        "fr": "L'URL doit commencer par http:// ou https:// et se terminer par `/rest/services/`."
+      },
       "examples": [
         "https://example.com/.../rest/services/"
       ]

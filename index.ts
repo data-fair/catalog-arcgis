@@ -3,8 +3,9 @@ import { schema as configSchema, assertValid as assertConfigValid, type ArcGISCo
 import type { CatalogPlugin } from '@data-fair/lib-common-types/catalog/index.js'
 
 const plugin: CatalogPlugin<ArcGISConfig, ArcGISCapabilities> = {
-  async prepare () {
-    return {}
+  async prepare (context) {
+    const prepare = (await import('./lib/prepare.ts')).default
+    return prepare(context)
   },
 
   async list (context) {

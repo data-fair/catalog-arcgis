@@ -1,6 +1,6 @@
 import type { ArcGISConfig, ArcGISLayer } from '#types'
 import type { CatalogPlugin, GetResourceContext, Resource } from '@data-fair/types-catalogs'
-import axios from 'axios'
+import axios from '@data-fair/lib-node/axios.js'
 import fs from 'fs'
 import path from 'path'
 import debugLib from 'debug'
@@ -79,11 +79,11 @@ const downloadResource = async ({ resourceId, tmpDir }: GetResourceContext<ArcGI
       const params = new URLSearchParams({
         where: '1=1',
         f: 'geojson',
+        outFields: '*',
         resultOffset: resultOffset.toString(),
         resultRecordCount: pageSize.toString()
       })
-      const url = `${baseUrl}?${params.toString()}`
-      const response = await axios.get(url)
+      const response = await axios.get(baseUrl, { params })
       if (response.status !== 200) {
         throw new Error(`Erreur lors du téléchargement ${JSON.stringify(response)}`)
       }

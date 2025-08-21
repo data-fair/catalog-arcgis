@@ -2,9 +2,9 @@ import type { ArcGISConfig, ArcGISLayer, ArcGISSchemas, ArcGISService, ArcGISSub
 import type { ListContext, Folder } from '@data-fair/types-catalogs'
 import type CatalogPlugin from '@data-fair/types-catalogs'
 import type { ArcGISCapabilities } from './capabilities.ts'
+import axios from '@data-fair/lib-node/axios.js'
 import debugLib from 'debug'
 import memoize from 'memoize'
-import axios from 'axios'
 
 type ResourceList = Awaited<ReturnType<CatalogPlugin['list']>>['results']
 
@@ -13,7 +13,7 @@ const debug = debugLib('catalogs:arcgis')
 const memoizedFetch = memoize(async (url: string) => {
   return (await axios.get(url, { params: { f: 'json' } })).data
 }, {
-  maxAge: 1000 * 60 * 5 // 5 minutes
+  maxAge: 1000 * 30 // 30 seconds cache
 })
 
 /**

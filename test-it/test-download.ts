@@ -53,11 +53,13 @@ describe('getResource', () => {
       }
 
       nock('https://example.com')
-        .get('/arcgis2/rest/services/AppliGrandPublic/EQUIPEMENTS_PUBLICS/MapServer/1?f=json')
+        .get('/arcgis2/rest/services/AppliGrandPublic/EQUIPEMENTS_PUBLICS/MapServer/1')
+        .query({ f: 'json' })
         .reply(200, metadataResponse)
 
       nock('https://example.com')
-        .get('/arcgis2/rest/services/AppliGrandPublic/EQUIPEMENTS_PUBLICS/MapServer/1/query?where=1%3D1&f=geojson&resultOffset=0&resultRecordCount=1000')
+        .get('/arcgis2/rest/services/AppliGrandPublic/EQUIPEMENTS_PUBLICS/MapServer/1/query')
+        .query({ where: '1=1', f: 'geojson', resultOffset: 0, resultRecordCount: 1000, outFields: '*' })
         .reply(200, dataResponse)
 
       const resource = await getResource(context)
@@ -125,10 +127,10 @@ describe('getResource', () => {
     assert.strictEqual(resource.filePath, 'test-it/tmp/Académique-1.geojson')
     assert.ok(existsSync(resource.filePath))
     const content = readFileSync(resource.filePath, 'utf-8')
-    const exepect = {
+    const expect = {
       type: 'FeatureCollection',
-      features: [{ type: 'Feature', geometry: { type: 'Point', coordinates: [0.34591862903985909, 46.588057736232244] }, properties: { NOMSITE: 'Onisep' } }]
+      features: [{ type: 'Feature', id: 74171, geometry: { type: 'Point', coordinates: [0.3459186290398591, 46.588057736232244] }, properties: { OBJECTID: 74171, THEME: 'ADMINISTRATION', SOUS_THEME: 'ACADEMIQUE', ID_SITE: 378, MISE_A_JOUR: 1465430400000, NOMSITE: 'Onisep', ADRESSE: '22 Rue Guillaume VII Le Troubadour', CODE_POSTA: 86000, ID_VILLE: 'POITIERS', LIBELLE_QUARTIER: 'TROIS QUARTIERS', TELEPHONE: '05 16 52 69 30', FAX: '05 16 52 69 40', EMAIL: ' ', SITE_WEB: 'http://www.onisep.fr/Mes-infos-regionales/Poitou-Charentes.fr', HORAIRES_OUVERTURES: ' ', GESTIONNAI: ' ', INFOS_COMPLEMENTAIRES: ' ', LIEN_HTML: ' ', LIEN_PHOTO: ' ', ID_BAT: ' ', STATUT_EQUIPEMENT: ' ', CODE_INSEE: 86194 } }]
     }
-    assert.strictEqual(content, JSON.stringify(exepect))
+    assert.strictEqual(content, JSON.stringify(expect))
   })
 })
