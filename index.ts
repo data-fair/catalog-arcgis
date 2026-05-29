@@ -1,6 +1,6 @@
 import { type ArcGISCapabilities, capabilities } from './lib/capabilities.ts'
 import { schema as configSchema, assertValid as assertConfigValid, type ArcGISConfig } from './types/config/index.ts'
-import type { CatalogPlugin } from '@data-fair/lib-common-types/catalog/index.js'
+import type CatalogPlugin from '@data-fair/types-catalogs'
 
 const plugin: CatalogPlugin<ArcGISConfig, ArcGISCapabilities> = {
   async prepare (context) {
@@ -21,8 +21,7 @@ const plugin: CatalogPlugin<ArcGISConfig, ArcGISCapabilities> = {
   configSchema,
   assertConfigValid,
   metadata: {
-    title: 'Catalog ArcGIS',
-    description: 'Importez des données géospatiales provenant de services ArcGIS.',
+    title: 'ArcGIS',
     capabilities
   }
 }

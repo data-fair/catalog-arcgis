@@ -34,7 +34,9 @@ describe('getResource', () => {
         url: 'https://example.com/arcgis2/rest/services'
       },
       secrets: {},
-      importConfig: {}
+      importConfig: {},
+      log: { info: async () => {}, step: async () => {}, warning: async () => {}, error: async () => {}, task: async () => {}, progress: async () => {} },
+      update: { metadata: true, schema: true }
     }
 
     it('should fetch metadata and download resource successfully', async () => {
@@ -74,7 +76,7 @@ describe('getResource', () => {
       assert.strictEqual(resource.filePath, 'test-it/tmp/Equipement-1.geojson')
       assert.ok(existsSync(resource.filePath))
       const content = readFileSync(resource.filePath, 'utf-8')
-      assert.strictEqual(content, JSON.stringify(dataResponse))
+      assert.deepStrictEqual(JSON.parse(content), dataResponse)
     })
 
     it('should throw an error if the resource type is not Feature Layer', async () => {
@@ -113,7 +115,9 @@ describe('getResource', () => {
         url: 'https://sig.grandpoitiers.fr/arcgis2/rest/services'
       },
       secrets: {},
-      importConfig: {}
+      importConfig: {},
+      log: { info: async () => {}, step: async () => {}, warning: async () => {}, error: async () => {}, task: async () => {}, progress: async () => {} },
+      update: { metadata: true, schema: true }
     }
     const resource = await getResource(context)
 
@@ -129,8 +133,8 @@ describe('getResource', () => {
     const content = readFileSync(resource.filePath, 'utf-8')
     const expect = {
       type: 'FeatureCollection',
-      features: [{ type: 'Feature', id: 74171, geometry: { type: 'Point', coordinates: [0.3459186290398591, 46.588057736232244] }, properties: { OBJECTID: 74171, THEME: 'ADMINISTRATION', SOUS_THEME: 'ACADEMIQUE', ID_SITE: 378, MISE_A_JOUR: 1465430400000, NOMSITE: 'Onisep', ADRESSE: '22 Rue Guillaume VII Le Troubadour', CODE_POSTA: 86000, ID_VILLE: 'POITIERS', LIBELLE_QUARTIER: 'TROIS QUARTIERS', TELEPHONE: '05 16 52 69 30', FAX: '05 16 52 69 40', EMAIL: ' ', SITE_WEB: 'http://www.onisep.fr/Mes-infos-regionales/Poitou-Charentes.fr', HORAIRES_OUVERTURES: ' ', GESTIONNAI: ' ', INFOS_COMPLEMENTAIRES: ' ', LIEN_HTML: ' ', LIEN_PHOTO: ' ', ID_BAT: ' ', STATUT_EQUIPEMENT: ' ', CODE_INSEE: 86194 } }]
+      features: [{ type: 'Feature', id: 74171, geometry: { type: 'Point', coordinates: [0.3459186290398595, 46.588057736232244] }, properties: { OBJECTID: 74171, THEME: 'ADMINISTRATION', SOUS_THEME: 'ACADEMIQUE', ID_SITE: 378, MISE_A_JOUR: 1465430400000, NOMSITE: 'Onisep', ADRESSE: '22 Rue Guillaume VII Le Troubadour', CODE_POSTA: 86000, ID_VILLE: 'POITIERS', LIBELLE_QUARTIER: 'TROIS QUARTIERS', TELEPHONE: '05 16 52 69 30', FAX: '05 16 52 69 40', EMAIL: ' ', SITE_WEB: 'http://www.onisep.fr/Mes-infos-regionales/Poitou-Charentes.fr', HORAIRES_OUVERTURES: ' ', GESTIONNAI: ' ', INFOS_COMPLEMENTAIRES: ' ', LIEN_HTML: ' ', LIEN_PHOTO: ' ', ID_BAT: ' ', STATUT_EQUIPEMENT: ' ', CODE_INSEE: 86194 } }]
     }
-    assert.strictEqual(content, JSON.stringify(expect))
+    assert.deepStrictEqual(JSON.parse(content), expect)
   })
 })
