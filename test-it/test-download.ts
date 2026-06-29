@@ -98,7 +98,7 @@ describe('getResource', () => {
         fail('Expected an error to be thrown')
       } catch (error) {
         if (error instanceof Error) {
-          assert.strictEqual(error.message, 'Les ressources ArcGIS pouvant être importées doivent être de type \'Feature Layer\' ou \'AnnotationLayer\' (type reçu : Map Service)')
+          assert.strictEqual(error.message, 'Importable ArcGIS resources must be of type \'Feature Layer\' or \'AnnotationLayer\' (received type: Map Service)')
         } else {
           fail('An unexpected error occurred')
         }
