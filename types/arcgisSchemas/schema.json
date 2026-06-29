@@ -16,7 +16,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "description": "Les autres types ne sont pas pris en charge",
+          "description": "Other types are not supported",
           "enum": [
             "Group Layer",
             "Feature Layer",
@@ -68,7 +68,7 @@
         },
         "type": {
           "type": "string",
-          "description": "Les autres types ne sont pas pris en charge",
+          "description": "Other types are not supported",
           "enum": [
             "FeatureServer",
             "MapServer"

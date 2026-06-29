@@ -40,7 +40,7 @@ const getMetaData = async ({ resourceId }: GetResourceContext<ArcGISConfig>): Pr
   const data: ArcGISLayer = (await axios.get(url)).data
   if (data.type !== 'Feature Layer' && data.type !== 'Annotation Layer') {
     console.error(`error : attempt to download a file from arcGIS with a ${data.type} type`)
-    throw new Error(`Les ressources ArcGIS pouvant être importées doivent être de type 'Feature Layer' ou 'AnnotationLayer' (type reçu : ${data.type})`)
+    throw new Error(`Importable ArcGIS resources must be of type 'Feature Layer' or 'AnnotationLayer' (received type: ${data.type})`)
   }
 
   return {
@@ -85,7 +85,7 @@ const downloadResource = async ({ resourceId, tmpDir }: GetResourceContext<ArcGI
       })
       const response = await axios.get(baseUrl, { params })
       if (response.status !== 200) {
-        throw new Error(`Erreur lors du téléchargement ${JSON.stringify(response)}`)
+        throw new Error(`Error while downloading ${JSON.stringify(response)}`)
       }
       const data = response.data
       if (!type && data.type) {
@@ -115,6 +115,6 @@ const downloadResource = async ({ resourceId, tmpDir }: GetResourceContext<ArcGI
     return filePath
   } catch (error) {
     console.error('Error fetching data:', error)
-    throw new Error('Error pendant le téléchargement du fichier')
+    throw new Error('Error while downloading the file')
   }
 }
